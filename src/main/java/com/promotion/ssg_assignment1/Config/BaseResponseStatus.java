@@ -6,7 +6,8 @@ import java.sql.Timestamp;
 
 @Getter
 public enum BaseResponseStatus {
-    EMPTY_NAME(400,"name은 빈칸일 수 없습니다.",100)
+    EMPTY_NAME(400,"name은 빈칸일 수 없습니다.",100),
+    INVALID_USER_ID(400,"사용할 수 없는 userId 입니다.",101)
     ;
 
     private final Timestamp timestamp;

@@ -3,6 +3,7 @@ package com.promotion.ssg_assignment1.user;
 import com.promotion.ssg_assignment1.Config.BaseException;
 import com.promotion.ssg_assignment1.Config.BaseResponseStatus;
 import com.promotion.ssg_assignment1.user.Dto.CreateUserReq;
+import com.promotion.ssg_assignment1.user.Dto.DeleteUserReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,10 +29,24 @@ public class UserService {
     }
 
     public void newUser(CreateUserReq createUserReq) throws BaseException {
-        if(createUserReq.getName().length() == 0 || createUserReq.getName().equals(" "))
+        if (createUserReq.getName().length() == 0 || createUserReq.getName().equals(" "))
             throw new BaseException(BaseResponseStatus.EMPTY_NAME);
         String type = "일반";
-        if(createUserReq.getType().equals("기업회원")) type = "기업회원";
+        if (createUserReq.getType().equals("기업회원")) type = "기업회원";
         createUser(createUserReq.getName(), type);
+    }
+
+    public boolean isValidUserId(Long userId) {
+        User user = userRepository.getByUserId(userId).orElse(null);
+        if (user == null || user.isDeleted()) return false;
+        else return true;
+    }
+
+    @Transactional
+    public void deleteUser(DeleteUserReq deleteUserReq) throws BaseException {
+        if (!isValidUserId(deleteUserReq.getUserId()))
+            throw new BaseException(BaseResponseStatus.INVALID_USER_ID);
+        User user = userRepository.getByUserId(deleteUserReq.getUserId()).orElse(null);
+        user.setDeleted(true);
     }
 }
