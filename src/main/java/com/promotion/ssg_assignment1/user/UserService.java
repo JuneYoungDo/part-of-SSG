@@ -19,21 +19,22 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void createUser(String name, String type) {
+    public User createUser(String name, String type) {
         User user = User.builder()
                 .name(name)
                 .type(type)
                 .deleted(false)
                 .build();
         save(user);
+        return user;
     }
 
-    public void newUser(CreateUserReq createUserReq) throws BaseException {
+    public User newUser(CreateUserReq createUserReq) throws BaseException {
         if (createUserReq.getName().length() == 0 || createUserReq.getName().equals(" "))
             throw new BaseException(BaseResponseStatus.EMPTY_NAME);
         String type = "일반";
         if (createUserReq.getType().equals("기업회원")) type = "기업회원";
-        createUser(createUserReq.getName(), type);
+        return createUser(createUserReq.getName(), type);
     }
 
     public boolean isValidUserId(Long userId) {
@@ -43,10 +44,11 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteUser(DeleteUserReq deleteUserReq) throws BaseException {
+    public User deleteUser(DeleteUserReq deleteUserReq) throws BaseException {
         if (!isValidUserId(deleteUserReq.getUserId()))
             throw new BaseException(BaseResponseStatus.INVALID_USER_ID);
         User user = userRepository.getByUserId(deleteUserReq.getUserId()).orElse(null);
         user.setDeleted(true);
+        return user;
     }
 }
