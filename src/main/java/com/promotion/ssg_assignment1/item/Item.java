@@ -4,7 +4,8 @@ import com.promotion.ssg_assignment1.promotion.Promotion;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -21,8 +22,9 @@ public class Item {
     private String itemName;
     private String itemType;
     private double price;
-    private LocalDateTime displayStartDate;
-    private LocalDateTime displayEndDate;
+    private LocalDate displayStartDate;
+    private LocalDate displayEndDate;
+    private boolean deleted;
 
     @ManyToMany
     @JoinTable(name= "promotion_item",
