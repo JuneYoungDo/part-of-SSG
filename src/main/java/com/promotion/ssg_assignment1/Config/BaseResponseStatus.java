@@ -10,7 +10,8 @@ public enum BaseResponseStatus {
     INVALID_USER_ID(400,"사용할 수 없는 userId 입니다.",101),
     CUSTOM_ERROR(400,"",102),
     INVALID_PERIOD(400,"시작시간 보다 끝나는 시간이 빠를 수 없습니다.",103),
-    INVALID_PRICE(400,"가격은 0보다 같거나 작을 수 없습니다.",104)
+    INVALID_PRICE(400,"가격은 0보다 같거나 작을 수 없습니다.",104),
+    INVALID_ITEM_ID(400,"사용할 수 없는 itemId 입니다.",105)
     ;
 
     private final Timestamp timestamp;
