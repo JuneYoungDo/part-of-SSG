@@ -35,10 +35,11 @@ public class PromotionService {
     public Promotion newPromotion(CreatePromotionReq createPromotionReq) throws BaseException {
         if (createPromotionReq.getDiscountAmount().length() == 0 && createPromotionReq.getDiscountRate().length() == 0)
             throw new BaseException(BaseResponseStatus.CAN_NOT_EMPTY_BOTH_OF_DISCOUNT);
+        if (createPromotionReq.getDiscountAmount().length() != 0 && createPromotionReq.getDiscountRate().length() != 0)
+            throw new BaseException(BaseResponseStatus.CAN_NOT_BOTH_OF_DISCOUNT);
         LocalDate startDate = createPromotionReq.getPromotionStartDate();
         LocalDate endDate = createPromotionReq.getPromotionEndDate();
-        double discountAmount = 0;
-        double discountRate = 0;
+        double discountAmount = 0, discountRate = 0;
         if (createPromotionReq.getDiscountAmount().length() == 0) {
             discountRate = Double.parseDouble(createPromotionReq.getDiscountRate());
             if (discountRate <= 0) throw new BaseException(BaseResponseStatus.INVALID_DISCOUNT);
