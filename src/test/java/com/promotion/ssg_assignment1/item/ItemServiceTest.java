@@ -49,6 +49,24 @@ public class ItemServiceTest {
     }
 
     @Test
+    @DisplayName("[상품 생성 실패] 가격이 올바르지 않은 경우")
+    void 상품_생성_실패_가격() {
+        createItemReq.setPrice("-1000");
+        BaseException exception = assertThrows(BaseException.class,
+                () -> itemService.newItem(createItemReq));
+        assertThat(BaseResponseStatus.INVALID_PRICE.getMessage()).isEqualTo(exception.getStatus().getMessage());
+    }
+
+    @Test
+    @DisplayName("[상품 생성 실패] 기간이 올바르지 않은 경우")
+    void 상품_생성_실패_기간() {
+        createItemReq.setDisplayEndDate(LocalDate.of(2021, 01, 01));
+        BaseException exception = assertThrows(BaseException.class,
+                () -> itemService.newItem(createItemReq));
+        assertThat(BaseResponseStatus.INVALID_PERIOD.getMessage()).isEqualTo(exception.getStatus().getMessage());
+    }
+
+    @Test
     @DisplayName("[상품 삭제 성공]")
     void 상품_삭제_성공() throws BaseException {
         DeleteItemReq deleteItemReq = new DeleteItemReq(1L);
