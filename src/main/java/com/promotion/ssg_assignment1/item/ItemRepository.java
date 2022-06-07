@@ -2,5 +2,8 @@ package com.promotion.ssg_assignment1.item;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface ItemRepository extends JpaRepository<Item, Long> {
+    Optional<Item> getByItemId(Long itemId);
 }
