@@ -3,6 +3,7 @@ package com.promotion.ssg_assignment1.promotion;
 import com.promotion.ssg_assignment1.Config.BaseException;
 import com.promotion.ssg_assignment1.Config.BaseResponse;
 import com.promotion.ssg_assignment1.Config.BaseResponseStatus;
+import com.promotion.ssg_assignment1.promotion.Dto.ApplyItemToPromotionReq;
 import com.promotion.ssg_assignment1.promotion.Dto.CreatePromotionReq;
 import com.promotion.ssg_assignment1.promotion.Dto.DeletePromotionReq;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +50,21 @@ public class PromotionController {
     public ResponseEntity deletePromotion(@RequestBody DeletePromotionReq deletePromotionReq) {
         try {
             promotionService.deletePromotion(deletePromotionReq);
+            return new ResponseEntity(200, HttpStatus.valueOf(200));
+        } catch (BaseException exception) {
+            return new ResponseEntity(new BaseResponse(exception.getStatus()),
+                    HttpStatus.valueOf(exception.getStatus().getStatus()));
+        }
+    }
+
+    /**
+     * 프로모션에 상품 적용 API
+     * [POST] /promotion/item
+     */
+    @PostMapping("/promotion/item")
+    public ResponseEntity applyItemToPromotion(@RequestBody ApplyItemToPromotionReq applyItemToPromotionReq) {
+        try {
+            promotionService.applyItemToPromotion(applyItemToPromotionReq);
             return new ResponseEntity(200, HttpStatus.valueOf(200));
         } catch (BaseException exception) {
             return new ResponseEntity(new BaseResponse(exception.getStatus()),

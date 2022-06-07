@@ -15,7 +15,9 @@ public enum BaseResponseStatus {
     CAN_NOT_EMPTY_BOTH_OF_DISCOUNT(400,"할인율과 할인 금액이 모두 공백일 수는 없습니다.",106),
     INVALID_DISCOUNT(400,"할인율과 할인 금액은 0보다 작거나 같을 수 없습니다.",107),
     INVALID_PROMOTION_ID(400,"사용할 수 없는 promotionId 입니다.",108),
-    CAN_NOT_BOTH_OF_DISCOUNT(400,"할인율과 할인 금액 모두 존재할 수 없습니다.",108)
+    CAN_NOT_BOTH_OF_DISCOUNT(400,"할인율과 할인 금액 모두 존재할 수 없습니다.",109),
+    ALREADY_CONTAINS(400,"이미 프로모션에 적용 중입니다.",110)
+
     ;
 
     private final Timestamp timestamp;
