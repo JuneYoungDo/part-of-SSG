@@ -31,6 +31,7 @@ public class PromotionService {
                 .discountAmount(discountAmount)
                 .discountRate(discountRate)
                 .promotionStartDate(startDate)
+                .promotionEndDate(endDate)
                 .deleted(false)
                 .build();
         save(promotion);
