@@ -5,14 +5,12 @@ import com.promotion.ssg_assignment1.Config.BaseResponse;
 import com.promotion.ssg_assignment1.Config.BaseResponseStatus;
 import com.promotion.ssg_assignment1.item.Dto.CreateItemReq;
 import com.promotion.ssg_assignment1.item.Dto.DeleteItemReq;
+import com.promotion.ssg_assignment1.item.Dto.GetItemPromotionReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -50,6 +48,20 @@ public class ItemController {
         try {
             itemService.deleteItem(deleteItemReq);
             return new ResponseEntity(200, HttpStatus.valueOf(200));
+        } catch (BaseException exception) {
+            return new ResponseEntity(new BaseResponse(exception.getStatus()),
+                    HttpStatus.valueOf(exception.getStatus().getStatus()));
+        }
+    }
+
+    /**
+     * 상품에 적용된 프로모션 정보 가져오기
+     * [GET] /item/promotion
+     */
+    @GetMapping("/item/promotion")
+    public ResponseEntity getItemPromotion(@RequestBody GetItemPromotionReq getItemPromotionReq) {
+        try {
+            return new ResponseEntity(itemService.getItemPromotion(getItemPromotionReq), HttpStatus.valueOf(200));
         } catch (BaseException exception) {
             return new ResponseEntity(new BaseResponse(exception.getStatus()),
                     HttpStatus.valueOf(exception.getStatus().getStatus()));

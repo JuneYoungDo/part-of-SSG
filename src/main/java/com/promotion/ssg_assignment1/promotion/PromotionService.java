@@ -2,6 +2,9 @@ package com.promotion.ssg_assignment1.promotion;
 
 import com.promotion.ssg_assignment1.Config.BaseException;
 import com.promotion.ssg_assignment1.Config.BaseResponseStatus;
+import com.promotion.ssg_assignment1.item.Item;
+import com.promotion.ssg_assignment1.item.ItemRepository;
+import com.promotion.ssg_assignment1.promotion.Dto.ApplyItemToPromotionReq;
 import com.promotion.ssg_assignment1.promotion.Dto.CreatePromotionReq;
 import com.promotion.ssg_assignment1.promotion.Dto.DeletePromotionReq;
 import lombok.RequiredArgsConstructor;
@@ -10,11 +13,13 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class PromotionService {
     private final PromotionRepository promotionRepository;
+    private final ItemRepository itemRepository;
 
     public void save(Promotion promotion) {
         promotionRepository.save(promotion);
@@ -26,6 +31,7 @@ public class PromotionService {
                 .discountAmount(discountAmount)
                 .discountRate(discountRate)
                 .promotionStartDate(startDate)
+                .promotionEndDate(endDate)
                 .deleted(false)
                 .build();
         save(promotion);
@@ -58,12 +64,33 @@ public class PromotionService {
         else return true;
     }
 
+    public boolean isValidItemId(Long itemId) {
+        Item item = itemRepository.getByItemId(itemId).orElse(null);
+        if (item == null || item.isDeleted()) return false;
+        else return true;
+    }
+
     @Transactional
     public Promotion deletePromotion(DeletePromotionReq deletePromotionReq) throws BaseException {
         if (!isValidPromotionId(deletePromotionReq.getPromotionId()))
             throw new BaseException(BaseResponseStatus.INVALID_PROMOTION_ID);
         Promotion promotion = promotionRepository.getByPromotionId(deletePromotionReq.getPromotionId()).orElse(null);
         promotion.setDeleted(true);
+        return promotion;
+    }
+
+    @Transactional
+    public Promotion applyItemToPromotion(ApplyItemToPromotionReq applyItemToPromotionReq) throws BaseException {
+        if (!isValidPromotionId(applyItemToPromotionReq.getPromotionId()))
+            throw new BaseException(BaseResponseStatus.INVALID_PROMOTION_ID);
+        if (!isValidItemId(applyItemToPromotionReq.getItemId()))
+            throw new BaseException(BaseResponseStatus.INVALID_ITEM_ID);
+        Promotion promotion = promotionRepository.getByPromotionId(applyItemToPromotionReq.getPromotionId()).orElse(null);
+        Item item = itemRepository.getByItemId(applyItemToPromotionReq.getItemId()).orElse(null);
+        List<Item> itemList = promotion.getItems();
+        if(itemList.contains(item)) throw new BaseException(BaseResponseStatus.ALREADY_CONTAINS);
+        itemList.add(item);
+        promotion.setItems(itemList);
         return promotion;
     }
 }
