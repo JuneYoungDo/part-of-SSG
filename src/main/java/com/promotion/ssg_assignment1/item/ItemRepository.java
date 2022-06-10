@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
+    @Query(value = "select i from Item i where i.itemId = :itemId and i.deleted = false")
     Optional<Item> getByItemId(Long itemId);
 
     @Query(value = "select i from Item i where i.deleted = false " +

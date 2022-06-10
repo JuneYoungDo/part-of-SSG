@@ -1,7 +1,10 @@
 package com.promotion.ssg_assignment1.promotion;
 
 import com.promotion.ssg_assignment1.item.Item;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,7 +13,6 @@ import java.util.List;
 @Entity
 @Builder
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "promotion")
@@ -30,4 +32,13 @@ public class Promotion {
             joinColumns = @JoinColumn(name = "promotion_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))
     private List<Item> items;
+
+    public void changeDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public void changeItems(List<Item> items) {
+        this.items = items;
+    }
+
 }

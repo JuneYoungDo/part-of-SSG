@@ -1,4 +1,4 @@
-package com.promotion.ssg_assignment1.Config;
+package com.promotion.ssg_assignment1.exception;
 
 import lombok.Getter;
 
@@ -16,7 +16,8 @@ public enum BaseResponseStatus {
     INVALID_DISCOUNT(400,"할인율과 할인 금액은 0보다 작거나 같을 수 없습니다.",107),
     INVALID_PROMOTION_ID(400,"사용할 수 없는 promotionId 입니다.",108),
     CAN_NOT_BOTH_OF_DISCOUNT(400,"할인율과 할인 금액 모두 존재할 수 없습니다.",109),
-    ALREADY_CONTAINS(400,"이미 프로모션에 적용 중입니다.",110)
+    ALREADY_CONTAINS(400,"이미 프로모션에 적용 중입니다.",110),
+    INVALID_DATE_TYPE(400,"날짜 입력 형식이 잘못되었습니다.",111)
 
     ;
 

@@ -1,4 +1,4 @@
-package com.promotion.ssg_assignment1.item.Dto;
+package com.promotion.ssg_assignment1.item.dto;
 
 import com.promotion.ssg_assignment1.promotion.Promotion;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PromotionPriceDto {
+public class PromotionPrice {
     private Promotion promotion;
     private double price;
 }

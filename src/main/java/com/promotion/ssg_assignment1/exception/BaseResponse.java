@@ -1,4 +1,4 @@
-package com.promotion.ssg_assignment1.Config;
+package com.promotion.ssg_assignment1.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.promotion.ssg_assignment1.item.Dto;
+package com.promotion.ssg_assignment1.item.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetItemPromotionReq {
+public class DeleteItemReq {
     private Long itemId;
 }
