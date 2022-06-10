@@ -1,4 +1,4 @@
-package com.promotion.ssg_assignment1.user.Dto;
+package com.promotion.ssg_assignment1.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

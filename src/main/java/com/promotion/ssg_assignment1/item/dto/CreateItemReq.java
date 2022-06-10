@@ -1,4 +1,4 @@
-package com.promotion.ssg_assignment1.promotion.Dto;
+package com.promotion.ssg_assignment1.item.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,14 +13,15 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreatePromotionReq {
-    @NotBlank(message = "프로모션 이름은 공백일 수 없습니다.")
+public class CreateItemReq {
+    @NotBlank(message = "상품 이름은 공백일 수 없습니다.")
     private String name;
-    private String discountAmount;
-    private String discountRate;
+    private String type;
+    @NotBlank(message = "가격은 공백일 수 없습니다.")
+    private String price;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate promotionStartDate;
+    private LocalDate displayStartDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate promotionEndDate;
+    private LocalDate displayEndDate;
 }

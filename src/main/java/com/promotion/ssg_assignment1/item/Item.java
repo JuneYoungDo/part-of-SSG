@@ -1,17 +1,18 @@
 package com.promotion.ssg_assignment1.item;
 
 import com.promotion.ssg_assignment1.promotion.Promotion;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Builder
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "item")
@@ -27,8 +28,16 @@ public class Item {
     private boolean deleted;
 
     @ManyToMany
-    @JoinTable(name= "promotion_item",
-        joinColumns = @JoinColumn(name = "item_id"),
-        inverseJoinColumns = @JoinColumn(name= "promotion_id"))
+    @JoinTable(name = "promotion_item",
+            joinColumns = @JoinColumn(name = "item_id"),
+            inverseJoinColumns = @JoinColumn(name = "promotion_id"))
     private List<Promotion> promotions;
+
+    public void changeDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public void changePromotions(List<Promotion> promotions) {
+        this.promotions = promotions;
+    }
 }

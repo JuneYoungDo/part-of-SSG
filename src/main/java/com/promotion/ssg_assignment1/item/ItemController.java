@@ -1,11 +1,11 @@
 package com.promotion.ssg_assignment1.item;
 
-import com.promotion.ssg_assignment1.Config.BaseException;
-import com.promotion.ssg_assignment1.Config.BaseResponse;
-import com.promotion.ssg_assignment1.Config.BaseResponseStatus;
-import com.promotion.ssg_assignment1.item.Dto.CreateItemReq;
-import com.promotion.ssg_assignment1.item.Dto.DeleteItemReq;
-import com.promotion.ssg_assignment1.item.Dto.GetItemPromotionReq;
+import com.promotion.ssg_assignment1.exception.BaseException;
+import com.promotion.ssg_assignment1.exception.BaseResponse;
+import com.promotion.ssg_assignment1.exception.BaseResponseStatus;
+import com.promotion.ssg_assignment1.item.dto.CreateItemReq;
+import com.promotion.ssg_assignment1.item.dto.DeleteItemReq;
+import com.promotion.ssg_assignment1.item.dto.GetItemPromotionReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,19 +24,14 @@ public class ItemController {
      * [POST] /item
      */
     @PostMapping("/item")
-    public ResponseEntity createItem(@RequestBody @Valid CreateItemReq createItemReq, Errors errors) {
+    public ResponseEntity createItem(@RequestBody @Valid CreateItemReq createItemReq, Errors errors) throws BaseException {
         if (errors.hasErrors()) {
             BaseResponseStatus baseResponseStatus = BaseResponseStatus.CUSTOM_ERROR;
             baseResponseStatus.setMessage(errors.getFieldError().getDefaultMessage());
             return new ResponseEntity(new BaseResponse(baseResponseStatus), HttpStatus.valueOf(baseResponseStatus.getStatus()));
         }
-        try {
-            itemService.newItem(createItemReq);
-            return new ResponseEntity(200, HttpStatus.valueOf(200));
-        } catch (BaseException exception) {
-            return new ResponseEntity(new BaseResponse(exception.getStatus()),
-                    HttpStatus.valueOf(exception.getStatus().getStatus()));
-        }
+        itemService.newItem(createItemReq);
+        return new ResponseEntity(200, HttpStatus.OK);
     }
 
     /**
@@ -44,14 +39,9 @@ public class ItemController {
      * [DELETE] /item
      */
     @DeleteMapping("/item")
-    public ResponseEntity deleteItem(@RequestBody DeleteItemReq deleteItemReq) {
-        try {
-            itemService.deleteItem(deleteItemReq);
-            return new ResponseEntity(200, HttpStatus.valueOf(200));
-        } catch (BaseException exception) {
-            return new ResponseEntity(new BaseResponse(exception.getStatus()),
-                    HttpStatus.valueOf(exception.getStatus().getStatus()));
-        }
+    public ResponseEntity deleteItem(@RequestBody DeleteItemReq deleteItemReq) throws BaseException {
+        itemService.deleteItem(deleteItemReq);
+        return new ResponseEntity(200, HttpStatus.OK);
     }
 
     /**
@@ -59,12 +49,7 @@ public class ItemController {
      * [GET] /item/promotion
      */
     @GetMapping("/item/promotion")
-    public ResponseEntity getItemPromotion(@RequestBody GetItemPromotionReq getItemPromotionReq) {
-        try {
-            return new ResponseEntity(itemService.getItemPromotion(getItemPromotionReq), HttpStatus.valueOf(200));
-        } catch (BaseException exception) {
-            return new ResponseEntity(new BaseResponse(exception.getStatus()),
-                    HttpStatus.valueOf(exception.getStatus().getStatus()));
-        }
+    public ResponseEntity getItemPromotion(@RequestBody GetItemPromotionReq getItemPromotionReq) throws BaseException {
+        return new ResponseEntity(itemService.getItemPromotion(getItemPromotionReq), HttpStatus.OK);
     }
 }

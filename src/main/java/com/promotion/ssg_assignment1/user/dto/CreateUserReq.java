@@ -1,4 +1,4 @@
-package com.promotion.ssg_assignment1.promotion.Dto;
+package com.promotion.ssg_assignment1.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeletePromotionReq {
-    private Long promotionId;
+public class CreateUserReq {
+    private String name;
+    private String type;
 }
