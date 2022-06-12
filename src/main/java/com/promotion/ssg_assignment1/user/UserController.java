@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.format.DateTimeParseException;
 
 @RestController
-@RestControllerAdvice
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -46,16 +45,5 @@ public class UserController {
     @GetMapping("/user/item")
     public ResponseEntity getUserItemList(@RequestBody GetUserItemListReq getUserItemListReq) throws BaseException {
         return new ResponseEntity(userService.getUserItemList(getUserItemListReq), HttpStatus.OK);
-    }
-
-    @ExceptionHandler(BaseException.class)
-    public ResponseEntity customException(BaseException exception) {
-        return new ResponseEntity(new BaseResponse(exception.getStatus()), HttpStatus.valueOf(exception.getStatus().getStatus()));
-    }
-
-    @ExceptionHandler(DateTimeParseException.class)
-    public ResponseEntity dateTimeException(DateTimeParseException e) {
-        BaseResponseStatus exception = BaseResponseStatus.INVALID_DATE_TYPE;
-        return new ResponseEntity(new BaseResponse(exception), HttpStatus.valueOf(exception.getStatus()));
     }
 }
