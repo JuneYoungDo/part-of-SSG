@@ -21,6 +21,7 @@ public class PromotionService {
     private final PromotionRepository promotionRepository;
     private final ItemRepository itemRepository;
 
+    @Transactional
     public void save(Promotion promotion) {
         promotionRepository.save(promotion);
     }
